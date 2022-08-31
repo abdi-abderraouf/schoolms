@@ -10,7 +10,7 @@ export default function Footer() {
     return (
 	<footer {...{ style }}>
 	    SchoolMS Copyright &copy; 2022  Hassan El anabi (
-	    <a href="https://al-annabi.tech">
+	    <a target="_blank" rel="noreferrer" href="https://al-annabi.tech">
 		Al-annabi.tech
 	    </a>)
 	</footer>
