@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const db = require("./db");
+const studentsController = require("./controllers/students");
 const PORT = Number(process.env.BACKEND_PORT);
 const app = express();
 
@@ -45,6 +46,22 @@ app.post("/api/login", async (req, res) => {
 	fullname: user.fullname,
 	token: await jwt.sign({ id: user._id }, process.env.JWT_SECRET)
     });
+});
+
+app.use("/api/students", studentsController);
+
+app.use((err, req, res, next) => {
+    console.error(err.name, err.message);
+    
+    if (res.headersSent) {
+	return next(err)
+    }
+    
+    if (err.name === "JsonWebTokenError") {
+	return res.status(401).json({ error: err.message });
+    }
+    
+    return res.status(500).end();
 });
 
 app.listen(PORT, () => {

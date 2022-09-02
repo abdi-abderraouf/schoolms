@@ -24,4 +24,24 @@ const User = mongoose.model("User", {
     }
 });
 
-module.exports = { connect, close, User };
+const Student = mongoose.model("Student", {
+    studentNum: {
+	type: String,
+	required: true,
+	unique: true
+    },
+    fullname: String,
+    birthDate: Date,
+    branch: {
+	type: String,
+	required: true
+    },
+    level: {
+	type: Number,
+	required: true, 
+	min: 1,
+	max: 10
+    }
+});
+
+module.exports = { connect, close, Student, User };
