@@ -8,21 +8,22 @@ function StudentForm() {
     const handleSubmit = event => {
 	event.preventDefault();
 
-	api.add("student",
-		Array.from(event.target).reduce((prev, curr) => (
-		    { ...prev, [curr.name]: curr.value }
-		), {}))
+	api.add("students",
+		Array.from(event.target)
+		.reduce((prev, curr) =>
+		    ({ ...prev, [curr.name]: curr.value }),
+		    {}))
 	    .then(() => {
 		event.target.reset();
 		showNotif("Student added", "success");
 	    })
 	    .catch(err => {
-		showNotif(err, "error");
+		showNotif(err.message, "error");
 	    });
     };
     
     return (
-	<form>
+	<form onSubmit={ handleSubmit }>
 	    <label htmlFor="student-number">
 		Student number <input id="student-number"
 				      name="studentNum"
@@ -49,9 +50,10 @@ function StudentForm() {
 			     min="1"
 			     max="10"
 			     placeholder="1"
+			     required
 		      />
 	    </label>
-	    <button onClick={handleSubmit}>Register</button>
+	    <button>Register</button>
 	</form>
     );
 }
