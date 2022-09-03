@@ -51,7 +51,7 @@ app.post("/api/login", async (req, res) => {
 app.use("/api/students", studentsController);
 
 app.use((err, req, res, next) => {
-    console.error(err.name, err.message);
+    console.error(`${err.name}: ${err.message}`);
     
     if (res.headersSent) {
 	return next(err)
@@ -59,6 +59,15 @@ app.use((err, req, res, next) => {
     
     if (err.name === "JsonWebTokenError") {
 	return res.status(401).json({ error: err.message });
+    }
+
+    if (err.name === "ValidationError") {
+	return res.status(400).json({ error: err.message });
+    }
+
+    if (err.name === "MongoServerError" &&
+	err.message.includes("duplicate key error")) {
+	return res.status(400).json({ error: "Duplicate Key Error" });
     }
     
     return res.status(500).end();
