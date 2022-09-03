@@ -1,14 +1,29 @@
-function post(url, obj, token=null) {
-    const headers = { "Content-Type": "application/json" };
-    if (token) headers["Authentication"] = `bearer ${token}`;
-    
-    return fetch(url, {
-	method: "POST",
-	headers,
-	body: JSON.stringify(obj)
-    });
+async function errFromRes(res) {
+    const hasBody = String(res.headers.get("Content-Type"))
+	  .startsWith("application/json");
+
+    return new Error(hasBody ?
+		     (await res.json()).error :
+		     res.statusText);
 }
 
+function request(url, method="GET", payload=null, auth=null) {
+    const options = { method };
+
+    if (payload) {
+	options.headers = { "Content-Type": "application/json" };
+	options.body = JSON.stringify(payload);
+    }
+    
+    if (auth) {
+	options.headers = {
+	    ...(options.headers || {}),
+	    "Authentication": `bearer ${auth}`
+	};
+    }
+
+    return fetch(url, options);
+}
 
 /** Artificial delay, usefull for debugging */
 function delay(ms) {
@@ -21,7 +36,7 @@ const api = {
     async authenticate(user) {
 	await delay(500);
 
-	const res = await post("/api/auth", user);
+	const res = await request("/api/auth", "POST", user);
 	
 	if (!res.ok) throw new Error((await res.json()).error);
 
@@ -29,7 +44,9 @@ const api = {
     },
     
     async login(username, password) {
-	const res = await post("/api/login", { username, password });
+	const res = await request("/api/login",
+				  "POST",
+				  { username, password });
 
 	if (res.ok) {
 	    const loggedUser = await res.json();
@@ -40,16 +57,22 @@ const api = {
     },
 
     async add(resourceType, obj) {
-	const res = await post(`/api/${resourceType}`, obj, this.token);
+	const res = await request(`/api/${resourceType}`,
+				  "POST",
+				  obj,
+				  this.token);
 	
-	if (!res.ok) {
-	    const hasBody = String(res.headers.get("Content-Type"))
-		  .startsWith("application/json");
+	if (!res.ok) throw await errFromRes(res);
+    },
 
-	    throw new Error(hasBody ?
-			    (await res.json()).error :
-			    "Internal Server Error");
-	}
+    async getAll(resourceType) {
+	const res = await request(`/api/${resourceType}`,
+				  "GET",
+				  null,
+				  this.token);
+
+	if (res.ok) return await res.json();
+	throw await errFromRes(res);
     }
 };
 

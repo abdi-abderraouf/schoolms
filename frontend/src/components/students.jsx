@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../api";
 import Ctx from "../contexts";
 
@@ -59,6 +59,17 @@ function StudentForm() {
 }
 
 function StudentTable() {
+    const [students, setStudents] = useState([]);
+    const showNotif = useContext(Ctx.Notif);
+
+    useEffect(() => {
+	api.getAll("students")
+	    .then(arr => setStudents(arr))
+	    .catch(err => {
+		showNotif(err.message, "error");
+	    });
+    }, [showNotif]);
+
     return (
 	<table>
 	    <thead>
@@ -71,6 +82,16 @@ function StudentTable() {
 		</tr>
 	    </thead>
 	    <tbody>
+		{
+		    students.map(student =>
+			<tr key={ student.studentNum }>
+			    <td>{ student.studentNum }</td>
+			    <td>{ student.fullname }</td>
+			    <td>{ student.birthDate }</td>
+			    <td>{ student.branch }</td>
+			    <td>{ student.level }</td>
+			</tr>)
+		}
 	    </tbody>
 	</table>
     );
