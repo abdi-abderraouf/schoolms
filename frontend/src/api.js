@@ -7,7 +7,7 @@ async function errFromRes(res) {
 		     res.statusText);
 }
 
-function request(url, method="GET", payload=null, auth=null) {
+function request(url, { method="GET", payload, auth }={}) {
     const options = { method };
 
     if (payload) {
@@ -36,7 +36,10 @@ const api = {
     async authenticate(user) {
 	await delay(500);
 
-	const res = await request("/api/auth", "POST", user);
+	const res = await request("/api/auth", {
+	    method: "POST",
+	    payload: user
+	});
 	
 	if (!res.ok) throw new Error((await res.json()).error);
 
@@ -44,9 +47,10 @@ const api = {
     },
     
     async login(username, password) {
-	const res = await request("/api/login",
-				  "POST",
-				  { username, password });
+	const res = await request("/api/login", {
+	    method: "POST",
+	    payload: { username, password }
+	});
 
 	if (res.ok) {
 	    const loggedUser = await res.json();
@@ -57,19 +61,18 @@ const api = {
     },
 
     async add(resourceType, obj) {
-	const res = await request(`/api/${resourceType}`,
-				  "POST",
-				  obj,
-				  this.token);
+	const res = await request(`/api/${resourceType}`, {
+	    method: "POST",
+	    payload: obj,
+	    auth: this.token
+	});
 	
 	if (!res.ok) throw await errFromRes(res);
     },
 
     async getAll(resourceType) {
 	const res = await request(`/api/${resourceType}`,
-				  "GET",
-				  null,
-				  this.token);
+				   { auth: this.token });
 
 	if (res.ok) return await res.json();
 	throw await errFromRes(res);
