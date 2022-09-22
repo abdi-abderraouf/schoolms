@@ -76,6 +76,14 @@ const api = {
 
 	if (res.ok) return await res.json();
 	throw await errFromRes(res);
+    },
+
+    async getOne(resourceType, id) {
+	await delay(500);
+	const res = await request(`/api/${resourceType}/${id}`,
+				  { auth: this.token });
+	if (res.ok) return await res.json();
+	throw await errFromRes(res);
     }
 };
 
