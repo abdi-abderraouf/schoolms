@@ -31,6 +31,19 @@ function Student() {
 	      return "Student updated successfully";
 	  });
 
+    const deleteStudent = () => {
+	if (!window.confirm(`Delete student '${student.fullname}'?`)) return;
+
+	api.deleteOne("students", student.studentNum)
+	    .then(() => {
+		navigate(`/students`);
+		showNotif("Student deleted successfully", "success");
+	    })
+	    .catch(err => {
+		showNotif(err.message, "error");
+	    });
+    }
+
     const style = {
 	textAlign: "center"
     };
@@ -45,7 +58,7 @@ function Student() {
 					     handleData={ editStudent } /> :
 	      <div>
 		  <button onClick={ setEditView }>Edit</button>{" "}
-		  <button>Delete</button>
+		  <button onClick={ deleteStudent }>Delete</button>
 		  <table>
 		      <tbody>
 			  <tr>

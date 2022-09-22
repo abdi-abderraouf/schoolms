@@ -87,14 +87,25 @@ const api = {
     },
 
     async replaceOne(resourceType, id, obj) {
-	const res = await request(`/api/${resourceType}/${id}`, {
+	const res = await request(`/api/${resourceType}/${id}`,
+				  {
 				      method: "PUT",
 				      payload: obj,
 				      auth: this.token
 				  });
 
 	if (!res.ok) throw await errFromRes(res);
+    },
+
+    async deleteOne(resourceType, id) {
+	const res = await request(`/api/${resourceType}/${id}`,
+				  {
+				      method: "DELETE",
+				      auth: this.token
+				  });
+	    
+	if (!res.ok) throw await errFromRes(res);
     }
-};
+}
 
 export default api;
