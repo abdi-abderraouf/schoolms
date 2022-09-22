@@ -1,21 +1,94 @@
 import { useContext, useEffect, useState } from "react";
+import { Routes, Route, useParams, useNavigate } from "react-router-dom";
 import api from "../api";
 import Ctx from "../contexts";
 
-function StudentForm() {
+function Student() {
+    const { studentId } = useParams();
+    const [student, setStudent] = useState();
+    const [view, setView] = useState("read");
+    const showNotif = useContext(Ctx.Notif);
+    const navigate = useNavigate();
+
+    const setReadView = () => setView("read");
+    const setEditView = () => setView("edit");
+
+    useEffect(() => {
+	api.getOne("students", studentId)
+	    .then(obj => setStudent(obj))
+	    .catch(err => {
+		showNotif(err.message, "error");
+		setStudent(null);
+	    });// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [studentId]);
+
+    const editStudent = newData => api
+	  .replaceOne("students", student.studentNum, newData)
+	  .then(() => {
+	      setStudent(newData);
+	      navigate(`/students/${newData.studentNum}`);
+	      setReadView();
+	      return "Student updated successfully";
+	  });
+
+    const style = {
+	textAlign: "center"
+    };
+
+    return (
+	<div {...{ style }}>
+	    { student === undefined ? <h3>Loading...</h3> :
+
+	      student === null ? <h3>This student data are unavailable</h3> :
+	      
+	      view === "edit" ? <StudentForm student={ student }
+					     handleData={ editStudent } /> :
+	      <div>
+		  <button onClick={ setEditView }>Edit</button>{" "}
+		  <button>Delete</button>
+		  <table>
+		      <tbody>
+			  <tr>
+			      <td>Student number</td>
+			      <td>{ student.studentNum }</td>
+			  </tr>
+			  <tr>
+			      <td>Full name</td>
+			      <td>{ student.fullname }</td>
+			  </tr>
+			  <tr>
+			      <td>Birth date</td>
+			      <td>{ student.birthDate }</td>
+			  </tr>
+			  <tr>
+			      <td>Branch</td>
+			      <td>{ student.branch }</td>
+			  </tr>
+			  <tr>
+			      <td>Level</td>
+			      <td>{ student.level }</td>
+			  </tr>
+		      </tbody>
+		  </table>
+	      </div>
+	    }
+	</div>
+    );
+}
+
+function StudentForm({ student, handleData }) {
     const showNotif = useContext(Ctx.Notif);
 
     const handleSubmit = event => {
 	event.preventDefault();
 
-	api.add("students",
-		Array.from(event.target)
-		.reduce((prev, curr) =>
-		    ({ ...prev, [curr.name]: curr.value }),
-		    {}))
-	    .then(() => {
+	handleData(Array.from(event.target)
+		   .reduce((prev, curr) =>
+		       ({ ...prev, [curr.name]: curr.value }),
+		       {}))
+	    .then(msg => {
 		event.target.reset();
-		showNotif("Student added", "success");
+		showNotif(msg, "success");
 	    })
 	    .catch(err => {
 		showNotif(err.message, "error");
@@ -28,16 +101,20 @@ function StudentForm() {
 		Student number <input id="student-number"
 				      name="studentNum"
 				      type="text"
+				      defaultValue={ student?.studentNum }
 				      required />
 	    </label>
 	    <label htmlFor="fullname">
-		Full name <input id="fullname" name="fullname" type="text" />
+		Full name <input id="fullname" name="fullname" type="text"
+				 defaultValue={ student?.fullname } />
 	    </label>
 	    <label htmlFor="birth-date">
-		Birth date <input id="birth-date" name="birthDate" type="date" />
+		Birth date <input id="birth-date" name="birthDate" type="date"
+				  defaultValue={ student?.birthDate } />
 	    </label>
 	    <label htmlFor="branch">
-		Branch <select id="branch" name="branch">
+		Branch <select id="branch" name="branch"
+			       defaultValue={ student?.branch }>
 			   <option value="engineering">Engineering</option>
 			   <option value="exSciences">Experimental Sciences</option>
 			   <option value="humanities">Humanities</option>
@@ -50,10 +127,11 @@ function StudentForm() {
 			     min="1"
 			     max="10"
 			     placeholder="1"
+			     defaultValue={ student?.level }
 			     required
 		      />
 	    </label>
-	    <button>Register</button>
+	    <button>Save</button>
 	</form>
     );
 }
@@ -61,6 +139,7 @@ function StudentForm() {
 function StudentTable() {
     const [students, setStudents] = useState([]);
     const showNotif = useContext(Ctx.Notif);
+    const navigate = useNavigate();
 
     useEffect(() => {
 	api.getAll("students")
@@ -69,6 +148,10 @@ function StudentTable() {
 		showNotif(err.message, "error");
 	    });
     }, [showNotif]);
+
+    const showStudent = (studentId) => {
+	navigate(`/students/${studentId}`);
+    };
 
     return (
 	<table>
@@ -84,7 +167,9 @@ function StudentTable() {
 	    <tbody>
 		{
 		    students.map(student =>
-			<tr key={ student.studentNum }>
+			<tr onClick={ () => showStudent(student.studentNum) }
+			    key={ student.studentNum }
+			>
 			    <td>{ student.studentNum }</td>
 			    <td>{ student.fullname }</td>
 			    <td>{ student.birthDate }</td>
@@ -99,8 +184,21 @@ function StudentTable() {
 
 export default function Students() {
     const [view, setView] = useState("table");
-    const showTable = () => setView("table");
-    const showForm = () => setView("form");
+    const navigate = useNavigate();
+
+    const showTable = () => {
+	setView("table");
+    };
+
+    const showForm = () => {
+	navigate("/students");
+	setView("form");
+    };
+
+    const addStudent = studentData =>
+	  api
+	  .add("students", studentData)
+	  .then(() => "Student added successfully");
 
     return (
 	<section>
@@ -111,10 +209,16 @@ export default function Students() {
 		}
 	    </div>
 	    <hr />
-	    { view === "form" ?
-	      <StudentForm /> :
-	      <StudentTable />
-	    }
+	    <Routes>
+		<Route path=""
+		       element={ view === "form" ?
+				 <StudentForm handleData={ addStudent }/> :
+				 <StudentTable />}
+		/>
+		<Route path=":studentId"
+		       element={ <Student /> }
+		/>
+	    </Routes>
 	</section>
     );
 }
