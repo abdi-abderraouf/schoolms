@@ -84,6 +84,16 @@ const api = {
 				  { auth: this.token });
 	if (res.ok) return await res.json();
 	throw await errFromRes(res);
+    },
+
+    async replaceOne(resourceType, id, obj) {
+	const res = await request(`/api/${resourceType}/${id}`, {
+				      method: "PUT",
+				      payload: obj,
+				      auth: this.token
+				  });
+
+	if (!res.ok) throw await errFromRes(res);
     }
 };
 
