@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const db = require("./db");
-const studentsController = require("./controllers/students");
+const Crud = require("./crud");
 const PORT = Number(process.env.BACKEND_PORT);
 const app = express();
 
@@ -48,7 +48,8 @@ app.post("/api/login", async (req, res) => {
     });
 });
 
-app.use("/api/students", studentsController);
+app.use("/api/students", new Crud(db.Student, "studentNum"));
+app.use("/api/subjects", new Crud(db.Subject, "code"));
 
 app.use((err, req, res, next) => {
     console.error(`${err.name}: ${err.message}`);

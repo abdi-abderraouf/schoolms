@@ -44,4 +44,14 @@ const Student = mongoose.model("Student", {
     }
 });
 
-module.exports = { connect, close, Student, User };
+const Subject = mongoose.model("Subject", {
+    code: {
+	type: String,
+	required: true,
+	unique: true
+    },
+    description: String
+});
+
+
+module.exports = { connect, close, Student, Subject, User };
