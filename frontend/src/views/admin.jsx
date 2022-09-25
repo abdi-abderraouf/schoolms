@@ -12,10 +12,10 @@ export default function Admin() {
 	    <NavBar />
 	    <Routes>
 		<Route path="" element={<About />} />
-		<Route path="classes" element={<Classes />} />
-		<Route path="students" element={<Students />} />
-		<Route path="subjects" element={<Subjects />} />
-		<Route path="teachers" element={<Teachers />} />		
+		<Route path="classes/*" element={<Classes />} />
+		<Route path="students/*" element={<Students />} />
+		<Route path="subjects/*" element={<Subjects />} />
+		<Route path="teachers/*" element={<Teachers />} />		
 	    </Routes>
 	</>
     );

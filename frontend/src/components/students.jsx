@@ -55,7 +55,8 @@ function Student() {
 	      student === null ? <h3>This student data are unavailable</h3> :
 	      
 	      view === "edit" ? <StudentForm student={ student }
-					     handleData={ editStudent } /> :
+					     handleData={ editStudent }
+					     cancel={ setReadView } /> :
 	      <div>
 		  <button onClick={ setEditView }>Edit</button>{" "}
 		  <button onClick={ deleteStudent }>Delete</button>
@@ -89,7 +90,7 @@ function Student() {
     );
 }
 
-function StudentForm({ student, handleData }) {
+function StudentForm({ student, handleData, cancel }) {
     const showNotif = useContext(Ctx.Notif);
 
     const handleSubmit = event => {
@@ -145,6 +146,7 @@ function StudentForm({ student, handleData }) {
 		      />
 	    </label>
 	    <button>Save</button>
+	    { cancel && <button type="button" onClick={ cancel }>Cancel</button> }
 	</form>
     );
 }

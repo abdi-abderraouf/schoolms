@@ -31,7 +31,7 @@ const Student = mongoose.model("Student", {
 	unique: true
     },
     fullname: String,
-    birthDate: Date,
+    birthDate: String,
     branch: {
 	type: String,
 	required: true
