@@ -1,11 +1,22 @@
+import Crud from "./crud";
+
 export default function Teachers() {
-    const style = {
-	textAlign: "center"
-    };
     return (
-	<section {...{style}}>
-	    <h3>Teachers</h3>
-	    <p><mark>TODO</mark></p>
-	</section>
+	<Crud resourceType="teachers"
+	      resourceName="Teacher"
+	      resourceKey="_id"
+	      fields={[
+		  {
+		      codename: "fullname",
+		      desc: "Full Name",
+		      required: true
+		  },
+		  {
+		      codename: "subjects",
+		      desc: "Subjects taught",
+		      transform: str => str.split(",").map(s => s.trim()),
+		      toStr: arr => arr.join(", ")
+		  }
+	      ]} />
     );
 }

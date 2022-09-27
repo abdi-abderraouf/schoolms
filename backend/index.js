@@ -50,6 +50,7 @@ app.post("/api/login", async (req, res) => {
 
 app.use("/api/students", new Crud(db.Student, "studentNum"));
 app.use("/api/subjects", new Crud(db.Subject, "code"));
+app.use("/api/teachers", new Crud(db.Teacher, "_id"));
 
 app.use((err, req, res, next) => {
     console.error(`${err.name}: ${err.message}`);

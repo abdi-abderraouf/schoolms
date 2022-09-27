@@ -53,5 +53,12 @@ const Subject = mongoose.model("Subject", {
     description: String
 });
 
+const Teacher = mongoose.model("Teacher", {
+    fullname: {
+	type: String,
+	required: true
+    },
+    subjects: [String]
+});
 
-module.exports = { connect, close, Student, Subject, User };
+module.exports = { connect, close, Student, Subject, Teacher, User };
