@@ -61,4 +61,26 @@ const Teacher = mongoose.model("Teacher", {
     subjects: [String]
 });
 
-module.exports = { connect, close, Student, Subject, Teacher, User };
+const Class = mongoose.model("Class", {
+    day: {
+	type: Number,
+	required: true,
+	min: 0,
+	max: 6
+    },
+    branch: {
+	type: String,
+	required: true
+    },
+    level: {
+	type: Number,
+	required: true,
+	min: 1,
+	max: 10
+    },
+    subject: String,
+    timeframe: [Number],
+    teacher: mongoose.ObjectId
+});
+
+module.exports = { connect, close, Class, Student, Subject, Teacher, User };
