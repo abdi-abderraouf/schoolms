@@ -80,7 +80,10 @@ const Class = mongoose.model("Class", {
     },
     subject: String,
     timeframe: [Number],
-    teacher: mongoose.ObjectId
+    teacher: {
+	type: mongoose.ObjectId,
+	ref: "Teacher"
+    }
 });
 
 module.exports = { connect, close, Class, Student, Subject, Teacher, User };

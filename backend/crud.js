@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const express = require("express")
 
-function Crud(dbModel, key) {
+function Crud(dbModel, key, populateProp) {
     const router = express.Router();
 
     router.use((req, res, next) => {
@@ -17,7 +17,10 @@ function Crud(dbModel, key) {
 
     router.get("/", async (req, res, next) => {
 	try {
-	    res.json(await dbModel.find({}));
+	    const query = dbModel.find({});
+	    res.json(await (populateProp ?
+			    query.populate(populateProp) :
+			    query));
 	} catch (err) {
 	    next(err);
 	}
