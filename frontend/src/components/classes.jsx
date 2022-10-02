@@ -3,7 +3,7 @@ import { days, branches } from "../static-data";
 import api from "../api";
 import Ctx from "../contexts";
 
-function ClassForm({ onAdd }) {
+function ClassForm({ onAdd, onCancel }) {
     const [subjects, setSubjects] = useState();
     const [teachers, setTeachers] = useState();
     const showNotif = useContext(Ctx.Notif);
@@ -94,32 +94,16 @@ function ClassForm({ onAdd }) {
 		}
 	    </select>
 	    <button type="submit">Save</button>
-	    <button type="button" className="alt">Cancel</button>
+	    <button type="button" className="alt" onClick={onCancel}>Cancel</button>
 	</form>
     );
 }
 
 export default function Classes() {
     const showNotif = useContext(Ctx.Notif);
-    const [classes, setClasses] = useState(/*[
-	{
-	    day: 0,
-	    branch: "engineering",
-	    level: 1,
-	    subject: "MAT0",
-	    timeframe: [8, 10],
-	    teacher: "6332ffe2fd41743fd031b97a"
-	},
-	{
-	    day: 0,
-	    branch: "engineering",
-	    level: 1,
-	    subject: "CS61",
-	    timeframe: [16, 18],
-	    teacher: "6332ffe2fd41743fd031b97a"
-	},
-    ]*/);
+    const [classes, setClasses] = useState();
     const [trigger, setTrigger] = useState(false);
+    const [showForm, setShowForm] = useState(false);
     const refreshData = () => setTrigger(bit => !bit);
 
     useEffect(() => {
@@ -139,11 +123,13 @@ export default function Classes() {
     return (
 	<section>
 	    <div className="toolbar">
-		<button>Add</button>
+		<button onClick={() => setShowForm(true)}>Add</button>
 	    </div>
 	    <hr />
-	    <ClassForm onAdd={refreshData}/>
-	    <hr />
+	    { showForm && <ClassForm
+			      onAdd={refreshData}
+			      onCancel={() => setShowForm(false)}/>
+	    }
 	    <table>
 		<thead>
 		    <tr>
