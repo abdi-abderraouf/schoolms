@@ -56,13 +56,18 @@ export default function App() {
 	    });
     };
 
+    const logout = () => {
+	setUser(null);
+	localStorage.removeItem("user");
+    };
+
     const style = {
 	minHeight: "65vh"
     };
 
     return (
 	<>
-	    <Header />
+	    <Header logout={logout} user={user?.username} />
 	    <main {...{ style }}>
 		{notif.text && <Alert {...{notif}} />}
 		<Routes>
