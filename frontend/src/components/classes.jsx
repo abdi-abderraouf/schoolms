@@ -43,7 +43,7 @@ function ClassForm({ onAdd, onCancel }) {
 		showNotif(err.message, "error");
 	    });
     };
-	
+    
     return (
 	<form onSubmit={addClass}>
 	    <label htmlFor="class-day">Week Day</label>
@@ -104,6 +104,7 @@ export default function Classes() {
     const [classes, setClasses] = useState();
     const [trigger, setTrigger] = useState(false);
     const [showForm, setShowForm] = useState(false);
+    const [selected, setSelected] = useState();
     const refreshData = () => setTrigger(bit => !bit);
 
     useEffect(() => {
@@ -112,7 +113,7 @@ export default function Classes() {
 	    .catch(err => {
 		showNotif(err.message, "error");
 	    }); // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [trigger]); 
+    }, [trigger]);
 
     const classesPerDay = days.map(day => ({ name: day,	classes: [] }));
 
@@ -120,10 +121,24 @@ export default function Classes() {
 	classesPerDay[c.day].classes.push(c);
     });
 
+    const removeClass = () => {
+	api.deleteOne("classes", selected)
+	    .then(() => {
+		showNotif(`Class removed successfully`);
+		setClasses(classes =>
+		    classes.filter(c => c._id !== selected));
+		setSelected(null);
+	    })
+	    .catch(err => {
+		showNotif(err.message, "error");
+	    });
+    };
+
     return (
 	<section>
 	    <div className="toolbar">
 		<button onClick={() => setShowForm(true)}>Add</button>
+		<button onClick={removeClass} disabled={!selected}>Remove</button>
 	    </div>
 	    <hr />
 	    { showForm && <ClassForm
@@ -131,35 +146,47 @@ export default function Classes() {
 			      onCancel={() => setShowForm(false)}/>
 	    }
 	    <table>
-		<thead>
-		    <tr>
-			<th>Week Day</th>
-			<th>Branch</th>
-			<th>Level</th>
-			<th>Subject</th>
-			<th>Time Frame</th>
-			<th>Teacher</th>
-		    </tr>
-		</thead>
 		<tbody>
+		    <tr>
+			<th></th>
+			<td>
+			    <table>
+				<thead>
+				    <tr>
+					<th>Branch</th>
+					<th>Level</th>
+					<th>Subject</th>
+					<th>Time Frame</th>
+					<th>Teacher</th>
+				    </tr>
+				</thead>
+			    </table>
+			</td>
+		    </tr>
 		    { classesPerDay.map(day =>
-			day.classes.length ?
-
-			    day.classes.map((c, i) =>
-				<tr key={`${day.name}-${c.teacher}-${c.timeframe[0]}`}>
-				    { i===0 &&
-				      <td rowSpan={day.classes.length || 1}>{day.name}</td>
-				    }
-				    <td>{c.branch}</td>
-				    <td>{c.level}</td>
-				    <td>{c.subject}</td>
-				    <td>{c.timeframe.join(" - ")}</td>
-				    <td>{c.teacher}</td>
-				</tr>) :
-			    
-			    <tr key={day.name}>
-				<td>{day.name}</td>
-			    </tr>)
+			<tr key={day.name}>
+			    <th>{day.name}</th>
+			    <td>
+				{ day.classes.length === 0 ?
+				  null :
+				  <table>
+				      <tbody>
+					  { day.classes.map(c =>
+					      <tr key={c._id}
+						  onClick={() => setSelected(c._id)}
+						  className={selected === c._id ? "selected" : ""}>
+						  <td>{c.branch}</td>
+						  <td>{c.level}</td>
+						  <td>{c.subject}</td>
+						  <td>{c.timeframe.join(" - ")}</td>
+						  <td>{c.teacher.fullname}</td>
+					      </tr>)
+					  }
+				      </tbody>
+				  </table>
+				}
+			    </td>		      
+			</tr>)
 		    }
 		</tbody>
 	    </table>
