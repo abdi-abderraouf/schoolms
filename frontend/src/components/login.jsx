@@ -1,17 +1,11 @@
 export default function Login({ login }) {
-    const style = {
-	padding: "2em",
-	borderBottom: "1px solid var(--primary)",
-	textAlign: "center"
-    }
-
     const handleSubmit = e => {
 	e.preventDefault();
 	login(e.target.username.value, e.target.password.value);
     };
 
     return (
-	<div {...{ style }}>
+	<div className="card" style={{ borderRadius: 0 }}>
 	    <form onSubmit={ handleSubmit  }>
 		<input id="username"
 		       name="username"

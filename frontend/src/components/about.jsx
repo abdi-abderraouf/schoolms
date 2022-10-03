@@ -6,25 +6,28 @@ export default function About() {
 
     const divStyle = {
 	display: "flex",
-	justifyContent: "center"
+	justifyContent: "space-around"
     };
 
     const colStyle = {
 	padding: "0 2em",
-	width: "44%"
+	width: "44%",
+	textAlign: "center"
     };
 	
     return (
 	<div {...{style}}>
+	    <div className="card">
 	    <h2>About this application</h2>
 	    <p>
 		SchoolMS (<b>School</b> <b>M</b>anagement <b>S</b>ystem) is a web application dedicated to manage administrative aspects of educational institutions.
 	    </p>
+	    </div>
 	    <p>
-		<i>Note: This project is still under development</i>
+		<i className="alert">Note: This project is still under development</i>
 	    </p>
 	    <div style={ divStyle }>
-		<div style={ colStyle }>
+		<div className="card" style={ colStyle }>
 		    <h3>For clients</h3>
 		    <p>
 			It can be customized/extended to meet your specific requirements.<br/>
@@ -35,7 +38,7 @@ export default function About() {
 			
 		    </p>
 		</div>
-		<div style={ colStyle }>
+		<div className="card" style={ colStyle }>
 		    <h3>For developers</h3>
 		    <p>
 			This is free software (source code).
