@@ -12,15 +12,20 @@ import Ctx from "./contexts";
 
 export default function App() {
     const [user, setUser] = useState(null);
-    const [notif, setNotif] = useState({ type: "", text: null });
+    const [notif, setNotif] = useState({ type: "", text: null, timer: null });
     const navigate = useNavigate();
     const authChecked = useRef(false);
 
-    const showNotif = (text, type="") => { // Fix this
-	setNotif({ type, text });
-	setTimeout(() => {
-	    setNotif({ text: null });
-	}, 5000);
+    const showNotif = (text, type="") => {
+	clearTimeout(notif.timer);
+	
+	setNotif({
+	    type,
+	    text,
+	    timer: setTimeout(() => {
+		setNotif({ text: null });
+	    }, 3000)
+	});
     };
 
     useEffect(() => {
@@ -41,7 +46,7 @@ export default function App() {
 	    .catch(err => {
 		showNotif(err.message, "error");
 		navigate("/login");
-	    });
+	    }); // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate]);
 
     const login = (username, password) => {
