@@ -82,24 +82,26 @@ table {
     text-align: left;
 }
 
-thead {
+.header-row .schedule-cell, thead {
     color: white;
     background-color: var(--alt);
+    font-weight: bold;
+    font-size: 1rem;
 }
 
-th, td {
+.schedule-cell, th, td {
     padding: .2em;
 }
 
-tbody > tr {
+.class-row, tbody > tr {
     cursor: pointer;
 }
 
-tbody > tr:hover {
+.class-row:hover, tbody > tr:hover {
     background-color: var(--light-trans);
 }
 
-tr.selected {
+.selected {
     background-color: var(--light);
 }
 
@@ -125,4 +127,17 @@ tr.selected {
     border-radius: 5px;
     padding: 1rem;
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+}
+
+.flex {
+    display: flex;
+}
+
+.header-row .schedule-cell {
+    border-right: 2px solid white;
+}
+
+.day-row {
+    width: 95vw;
+    border-bottom: 1px dashed #E63946;
 }

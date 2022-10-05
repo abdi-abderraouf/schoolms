@@ -134,62 +134,60 @@ export default function Classes() {
 	    });
     };
 
+    function Cell({ w, content }) {
+	return (
+	    <div className="schedule-cell" style={{width: `${w}vw`}}>
+		{content}
+	    </div>
+	);
+    }
+
     return (
 	<section>
 	    <div className="toolbar">
-		<button onClick={() => setShowForm(true)}>Add</button>
-		<button onClick={removeClass} disabled={!selected}>Remove</button>
+		<button onClick={() => setShowForm(true)}>
+		    Add
+		</button>
+		<button onClick={removeClass} disabled={!selected}>
+		    Remove
+		</button>
 	    </div>
 	    <hr />
-	    { showForm && <ClassForm
-			      onAdd={refreshData}
-			      onCancel={() => setShowForm(false)}/>
+	    { showForm &&
+	      <ClassForm
+		  onAdd={refreshData}
+		  onCancel={() => setShowForm(false)}/>
 	    }
-	    <table>
-		<tbody>
-		    <tr>
-			<th></th>
-			<td>
-			    <table>
-				<thead>
-				    <tr>
-					<th>Branch</th>
-					<th>Level</th>
-					<th>Subject</th>
-					<th>Time Frame</th>
-					<th>Teacher</th>
-				    </tr>
-				</thead>
-			    </table>
-			</td>
-		    </tr>
-		    { classesPerDay.map(day =>
-			<tr key={day.name}>
-			    <th>{day.name}</th>
-			    <td>
-				{ day.classes.length === 0 ?
-				  null :
-				  <table>
-				      <tbody>
-					  { day.classes.map(c =>
-					      <tr key={c._id}
-						  onClick={() => setSelected(c._id)}
-						  className={selected === c._id ? "selected" : ""}>
-						  <td>{c.branch}</td>
-						  <td>{c.level}</td>
-						  <td>{c.subject}</td>
-						  <td>{c.timeframe.join(" - ")}</td>
-						  <td>{c.teacher.fullname}</td>
-					      </tr>)
-					  }
-				      </tbody>
-				  </table>
-				}
-			    </td>		      
-			</tr>)
-		    }
-		</tbody>
-	    </table>
+	    <div>
+		<div className="header-row flex">
+		    <Cell w="18" content="Week Day" />
+		    <Cell w="20" content="Branch" />
+		    <Cell w="10" content="Level" />
+		    <Cell w="15" content="Subject" />
+		    <Cell w="12" content="Time" />
+		    <Cell w="20" content="Teacher" />
+		</div>
+		{ classesPerDay.map(day =>
+		    <div className="day-row flex" key={day.name}>
+			<Cell w="18" content={day.name} />
+			<div className="classes-cell">
+			    { Boolean(day.classes.length) &&
+			      day.classes.map(c =>
+				  <div key={c._id}
+				       onClick={() => setSelected(c._id)}
+				       className={"class-row flex " +
+						  (selected === c._id ? "selected" : "")}>
+				      <Cell w="20" content={c.branch} />
+				      <Cell w="10" content={c.level} />
+				      <Cell w="15" content={c.subject} />
+				      <Cell w="12" content={c.timeframe.join(" - ")} />
+				      <Cell w="20" content={c.teacher.fullname} />
+				  </div>)
+			    }
+			</div> 
+		    </div>)
+		}
+	    </div>
 	</section>
     );
 }
