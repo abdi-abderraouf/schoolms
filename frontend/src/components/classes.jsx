@@ -45,56 +45,72 @@ function ClassForm({ onAdd, onCancel }) {
     };
     
     return (
-	<form onSubmit={addClass}>
-	    <label htmlFor="class-day">Week Day</label>
-	    <select id="class-day" name="day">
-		{ days.map((day, i) =>
-		    <option value={i} key={day}>{day}</option>)
-		}
-	    </select>
-	    <label htmlFor="class-branch">Branch</label>
-	    <select id="class-branch" name="branch">
-		{ branches.map(branch =>
-		    <option value={branch} key={branch}>{branch}</option>)
-		}
-	    </select>
-	    <label htmlFor="class-level">Level</label>
-	    <input id="class-level"
-		   type="number"
-		   name="level"
-		   min="1"
-		   max="10"
-		   defaultValue="1"/>
-	    <label htmlFor="class-subject">Subject</label>
-	    <select id="class-subject" name="subject">
-		{ subjects?.map(subject =>
-		    <option value={subject.code} key={subject.code}>
-			{subject.code}
-		    </option>)
-		}
-	    </select>
-	    <label htmlFor="class-timeframe">Time frame: from</label>
-	    <input id="class-timeframe"
-		   name="timeframeStart"
-		   type="number"
-		   min="0"
-		   max="23"
-		   placeholder="08" />
-	    to <input name="timeframeEnd"
-		      type="number"
-		      min="0"
-		      max="23"
-		      placeholder="10" />
-	    <label htmlFor="class-teacher">Teacher</label>
-	    <select id="class-teacher" name="teacher">
-		{ teachers?.map(teacher =>
-		    <option value={teacher._id} key={teacher._id}>
-			{teacher.fullname}
-		    </option>)
-		}
-	    </select>
-	    <button type="submit">Save</button>
-	    <button type="button" className="alt" onClick={onCancel}>Cancel</button>
+	<form className="card" onSubmit={addClass}>
+	    <label htmlFor="class-day">	Week Day
+		<select id="class-day" name="day">
+		    { days.map((day, i) =>
+			<option value={i} key={day}>{day}</option>)
+		    }
+		</select>
+	    </label>
+	    <label htmlFor="class-branch">Branch
+		<select id="class-branch" name="branch">
+		    { branches.map(branch =>
+			<option value={branch} key={branch}>{branch}</option>)
+		    }
+		</select>
+	    </label>
+	    <label htmlFor="class-level">Level
+		<input id="class-level"
+		       type="number"
+		       name="level"
+		       min="1"
+		       max="10"
+		       defaultValue="1"/>
+	    </label>
+	    <label htmlFor="class-subject">Subject
+		<select id="class-subject" name="subject">
+		    { subjects?.map(subject =>
+			<option value={subject.code} key={subject.code}>
+			    {subject.code}
+			</option>)
+		    }
+		</select>
+	    </label>
+	    <label htmlFor="class-timeframe">From
+		<input id="class-timeframe"
+		       name="timeframeStart"
+		       type="number"
+		       min="0"
+		       max="23"
+		       placeholder="08" />
+	    </label>
+	    <label htmlFor="class-timeframeEnd">To
+		<input id="class-timeframeEnd"
+		       name="timeframeEnd"
+		       type="number"
+		       min="0"
+		       max="23"
+		       placeholder="10" />
+	    </label>
+	    <label htmlFor="class-teacher">Teacher
+		<select id="class-teacher" name="teacher">
+		    { teachers?.map(teacher =>
+			<option value={teacher._id} key={teacher._id}>
+			    {teacher.fullname}
+			</option>)
+		    }
+		</select>
+	    </label>
+	    <div style={{
+		     display: "flex",
+		     justifyContent: "flex-start",
+		     alignItems: "center" }}>
+		<button type="submit">Save</button>
+		<button type="button" className="alt" onClick={onCancel}>
+		    Cancel
+		</button>
+	    </div>
 	</form>
     );
 }

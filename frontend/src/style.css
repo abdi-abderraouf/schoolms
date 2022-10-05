@@ -28,6 +28,19 @@ h2, h3 {
     color: var(--alt);
 }
 
+form {
+    max-width: 600px;
+    background-color: #F9F9F9;
+    margin: 1rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form > * {
+    width: 45%;
+}
+
 a {
     color: var(--light);
     text-decoration: none;
@@ -38,8 +51,19 @@ a:hover {
 }
 
 input, select {
-    margin-right: 1em;
     padding: .5em;
+    margin: .5em;
+    border-radius: 3px;
+    background-color: white;
+    border: 1px solid #AAA;
+    width: 10rem;
+    float: right;
+}
+
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 button {
@@ -65,16 +89,6 @@ button[disabled] {
 nav a:hover {
     text-decoration: none;
     background-color: var(--light-secondary);
-}
-
-form {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-form > * {
-    margin-bottom: 1em;
 }
 
 table {
