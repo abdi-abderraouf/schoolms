@@ -1,7 +1,15 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header({ logout, user }) {
     const [showUserPopup, setShowUserPopup] = useState(false);
+
+    const handleLogout = () => {
+	setShowUserPopup(false);
+	logout();
+    };
+    
     const style = {
 	padding: "1em",
 	color: "white",
@@ -13,16 +21,30 @@ export default function Header({ logout, user }) {
     };
 
     const popupStyle = {
-	width: "8rem",
+	textAlign: "center",
+	width: "9rem",
 	height: "8rem",
-	backgroundColor: "#000A",
+	color: "#0D2547",
+	backgroundColor: "#F9F9F9",
 	position: "absolute",
 	right: "1rem",
-	top: "5rem",
-	padding: ".5em",
+	top: "4.5rem",
+	padding: "1rem",
 	display: "flex",
 	flexDirection: "column",
-	justifyContent: "space-between"
+	justifyContent: "space-between",
+    };
+
+    const iconStyle = {
+	color: "var(--primary)",
+	backgroundColor: "white",
+	width: "2rem",
+	height: "2rem",
+	borderRadius: "50%",
+	cursor: "pointer",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
     };
     
     return (
@@ -30,13 +52,16 @@ export default function Header({ logout, user }) {
 	    <h1>SchoolMS</h1>
 	    { user &&
 	      <>
-		  <span onClick={() => setShowUserPopup(!showUserPopup)}>
-		      PROFILE_ICON
+		  <span onClick={() => setShowUserPopup(!showUserPopup)}
+			style={ iconStyle }>
+		      <FontAwesomeIcon icon={ faUser } />
 		  </span>
 		  {showUserPopup &&
-		   <div style={popupStyle}>
+		   <div className="card" style={popupStyle}>
 		       <span>{user}</span>
-		       <span onClick={logout}>ICON Logout</span>
+		       <button className="alt" onClick={handleLogout}>
+			   <FontAwesomeIcon icon={ faRightFromBracket } /> Logout
+		       </button>
 		   </div>
 		  }
 	      </>
