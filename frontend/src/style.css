@@ -155,3 +155,16 @@ table {
     width: 95vw;
     border-bottom: 1px dashed #E63946;
 }
+
+#student-table tr {
+    border-bottom: 1px solid #AAA;
+    cursor: default;
+}
+
+#student-table tr:last-child {
+    border: none;
+}
+
+#student-table th {
+    width: 40%;
+}

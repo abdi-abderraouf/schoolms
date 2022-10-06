@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Routes, Route, useParams, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faXmark, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import api from "../api";
 import Ctx from "../contexts";
 
@@ -44,46 +46,59 @@ function Student() {
 	    });
     }
 
-    const style = {
+    const textCenter = {
 	textAlign: "center"
     };
 
-    return (
-	<div {...{ style }}>
-	    { student === undefined ? <h3>Loading...</h3> :
+    const tableStyle = {
+	maxWidth: "600px",
+	margin: "1rem auto"
+    };
 
-	      student === null ? <h3>This student data are unavailable</h3> :
+    return (
+	<div>
+	    { student === undefined ? <h3 style={textCenter}>Loading...</h3> :
+
+	      student === null ? <h3 style={textCenter}>This student data are unavailable</h3> :
 	      
 	      view === "edit" ? <StudentForm student={ student }
 					     handleData={ editStudent }
 					     cancel={ setReadView } /> :
 	      <div>
-		  <button onClick={ setEditView }>Edit</button>{" "}
-		  <button onClick={ deleteStudent }>Delete</button>
-		  <table>
-		      <tbody>
-			  <tr>
-			      <td>Student number</td>
-			      <td>{ student.studentNum }</td>
-			  </tr>
-			  <tr>
-			      <td>Full name</td>
-			      <td>{ student.fullname }</td>
-			  </tr>
-			  <tr>
-			      <td>Birth date</td>
-			      <td>{ student.birthDate }</td>
-			  </tr>
-			  <tr>
-			      <td>Branch</td>
-			      <td>{ student.branch }</td>
-			  </tr>
-			  <tr>
-			      <td>Level</td>
-			      <td>{ student.level }</td>
-			  </tr>
-		      </tbody>
-		  </table>
+		  <div style={textCenter}>
+		      <button onClick={ setEditView }>
+			  <FontAwesomeIcon icon={faPenToSquare} /> Edit
+		      </button>{" "}
+		      <button onClick={ deleteStudent }>
+			  <FontAwesomeIcon icon={faXmark} /> Delete
+		      </button>
+		  </div>
+		  <div className="card" style={tableStyle}>
+		      <table id="student-table" style={{ borderCollapse: "collapse" }}>
+			  <tbody>
+			      <tr>
+				  <th>Student number</th>
+				  <td>{ student.studentNum }</td>
+			      </tr>
+			      <tr>
+				  <th>Full name</th>
+				  <td>{ student.fullname }</td>
+			      </tr>
+			      <tr>
+				  <th>Birth date</th>
+				  <td>{ student.birthDate }</td>
+			      </tr>
+			      <tr>
+				  <th>Branch</th>
+				  <td>{ student.branch }</td>
+			      </tr>
+			      <tr>
+				  <th>Level</th>
+				  <td>{ student.level }</td>
+			      </tr>
+			  </tbody>
+		      </table>
+		  </div>
 	      </div>
 	    }
 	</div>
@@ -110,7 +125,7 @@ function StudentForm({ student, handleData, cancel }) {
     };
     
     return (
-	<form onSubmit={ handleSubmit }>
+	<form className="card" onSubmit={ handleSubmit }>
 	    <label htmlFor="student-number">
 		Student number <input id="student-number"
 				      name="studentNum"
@@ -145,8 +160,15 @@ function StudentForm({ student, handleData, cancel }) {
 			     required
 		      />
 	    </label>
-	    <button>Save</button>
-	    { cancel && <button type="button" onClick={ cancel }>Cancel</button> }
+	    <div style={{ display: "flex", alignItems: "center" }}>
+		<button>Save</button>
+		{ cancel &&
+		  <button className="alt"
+			  type="button"
+			  onClick={ cancel }>
+		      Cancel
+		  </button> }
+	    </div>
 	</form>
     );
 }
@@ -220,14 +242,17 @@ export default function Students() {
 	    <div className="toolbar">
 		{ view === "form" ?
 		  <button onClick={ showTable }>Go back</button> :
-		  <button onClick={ showForm }>Add student</button>
+		  <button onClick={ showForm }>
+		      <FontAwesomeIcon icon={ faPlus } /> Add student
+		  </button>
 		}
 	    </div>
 	    <hr />
 	    <Routes>
 		<Route path=""
 		       element={ view === "form" ?
-				 <StudentForm handleData={ addStudent }/> :
+				 <StudentForm cancel={ showTable }
+					      handleData={ addStudent } /> :
 				 <StudentTable />}
 		/>
 		<Route path=":studentId"

@@ -1,4 +1,6 @@
 import { useContext, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { days, branches } from "../static-data";
 import api from "../api";
 import Ctx from "../contexts";
@@ -162,10 +164,10 @@ export default function Classes() {
 	<section>
 	    <div className="toolbar">
 		<button onClick={() => setShowForm(true)}>
-		    Add
+		    <FontAwesomeIcon icon={faPlus} /> Add
 		</button>
 		<button onClick={removeClass} disabled={!selected}>
-		    Remove
+		    <FontAwesomeIcon icon={faXmark} /> Remove
 		</button>
 	    </div>
 	    <hr />
