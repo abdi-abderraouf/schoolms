@@ -5,8 +5,8 @@ export default function Login({ login }) {
     };
 
     return (
-	<div className="card" style={{ borderRadius: 0 }}>
-	    <form onSubmit={ handleSubmit  }>
+	<div style={{ borderRadius: 0 }}>
+	    <form className="card" onSubmit={ handleSubmit  }>
 		<input id="username"
 		       name="username"
 		       type="text"
@@ -19,7 +19,9 @@ export default function Login({ login }) {
 		       placeholder="Password"
 		       required
 		/>
-		<button type="submit">Login</button>
+		<button style={{alignSelf: "center", width: "10rem"}} type="submit">
+		    Login
+		</button>
 	    </form>
 	</div>
     );
