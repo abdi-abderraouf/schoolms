@@ -1,5 +1,7 @@
 import api from "../api";
 import { useContext, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Ctx from "../contexts";
 
 export default function Crud({resourceType, resourceName, resourceKey, fields}) {
@@ -63,24 +65,30 @@ export default function Crud({resourceType, resourceName, resourceKey, fields}) 
     return (
 	<section>
 	    <div className="toolbar">
-		<button onClick={() => setShowForm(true)}>Add</button>
+		<button onClick={() => setShowForm(true)}>
+		    <FontAwesomeIcon icon={faPlus} /> Add
+		</button>
 		<button onClick={removeResource} disabled={!selected}>
-		    Remove
+		    <FontAwesomeIcon icon={faXmark} /> Remove
 		</button>
 	    </div>
 	    <hr />
 	    { showForm &&
-	      <form onSubmit={addResource}>
+	      <form className="card" onSubmit={addResource}>
 		  { fields.map(field =>
-		      <label key={field.codename}
-			     htmlFor={`${resourceName}-${field.codename}`}>
-			  {field.desc} <input id={`${resourceName}-${field.codename}`}
-					      name={field.codename}
-					      required={Boolean(field.required)} />
-		      </label>)
+		      <input key={field.codename}
+			     name={field.codename}
+			     placeholder={field.desc}
+			     required={Boolean(field.required)} />)
 		  }
-		  <button type="submit">Save</button>{" "}
-		  <button type="button" className="alt" onClick={() => setShowForm(false)}>Cancel</button>
+		  <div style={{
+			   width: "max-content",
+			   alignSelf:"center",
+			   margin: ".5rem"
+		       }}>
+		      <button type="submit">Save</button>{" "}
+		      <button type="button" className="alt" onClick={() => setShowForm(false)}>Cancel</button>
+		  </div>
 	      </form> }
 	    <table>
 		<thead>
