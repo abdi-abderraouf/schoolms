@@ -4,11 +4,6 @@ export default function About() {
 	padding: "1rem"
     };
 
-    const divStyle = {
-	display: "flex",
-	justifyContent: "space-around"
-    };
-
     const colStyle = {
 	padding: "0 2em",
 	width: "44%",
@@ -26,7 +21,7 @@ export default function About() {
 	    <p>
 		<i className="alert">Note: This project is still under development</i>
 	    </p>
-	    <div style={ divStyle }>
+	    <div className="flex resp-flex" style={{ justifyContent: "space-around" }}>
 		<div className="card" style={ colStyle }>
 		    <h3>For clients</h3>
 		    <p>

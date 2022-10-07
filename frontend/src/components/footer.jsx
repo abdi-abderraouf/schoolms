@@ -4,15 +4,18 @@ export default function Footer() {
 	backgroundColor: "var(--primary)",
 	paddingTop: "2em",
 	paddingBottom: "4em",
-	textAlign: "center"
+	textAlign: "center",
+	justifyContent: "center",
+	columnGap: "1rem"
     };
     
     return (
-	<footer {...{ style }}>
-	    SchoolMS Copyright &copy; 2022  Hassan El anabi (
-	    <a target="_blank" rel="noreferrer" href="https://al-annabi.tech">
-		Al-annabi.tech
-	    </a>)
+	<footer className="flex resp-flex" {...{ style }}>
+	    <span>SchoolMS Copyright &copy; 2022  Hassan El anabi</span>
+	    <span> (<a target="_blank" rel="noreferrer" href="https://al-annabi.tech">
+			Al-annabi.tech
+		    </a>)
+	    </span>
 	</footer>
     );
 }

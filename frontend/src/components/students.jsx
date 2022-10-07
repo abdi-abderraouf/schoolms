@@ -51,7 +51,8 @@ function Student() {
 
     const tableStyle = {
 	maxWidth: "600px",
-	margin: "1rem auto"
+	margin: "1rem auto",
+	width: "90%"
     };
 
     return (
@@ -142,7 +143,7 @@ function StudentForm({ student, handleData, cancel }) {
     };
     
     return (
-	<form className="card" onSubmit={ handleSubmit }>
+	<form className="card resp-flex" onSubmit={ handleSubmit }>
 	    <label htmlFor="student-number">
 		Student number <input id="student-number"
 				      name="studentNum"

@@ -47,7 +47,7 @@ function ClassForm({ onAdd, onCancel }) {
     };
     
     return (
-	<form className="card" onSubmit={addClass}>
+	<form className="card resp-flex" onSubmit={addClass}>
 	    <label htmlFor="class-day">	Week Day
 		<select id="class-day" name="day">
 		    { days.map((day, i) =>
@@ -176,9 +176,9 @@ export default function Classes() {
 		  onAdd={refreshData}
 		  onCancel={() => setShowForm(false)}/>
 	    }
-	    <div>
+	    <div style={{ margin: "1rem 0 2rem"}}>
 		<div className="header-row flex">
-		    <Cell w="18" content="Week Day" />
+		    <Cell w="18" content="Day" />
 		    <Cell w="20" content="Branch" />
 		    <Cell w="10" content="Level" />
 		    <Cell w="15" content="Subject" />

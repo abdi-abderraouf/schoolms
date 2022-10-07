@@ -17,7 +17,9 @@ export default function NavBar() {
 	justifyContent: "center",
 	boxShadow: "var(--shadow)",
 	backgroundColor: "var(--secondary)",
-	margin: 0
+	margin: 0,
+	padding: 0,
+	textAlign: "center"
     };
 
     const linkStyle = to => ({
