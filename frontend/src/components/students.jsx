@@ -14,6 +14,7 @@ function Student() {
 
     const setReadView = () => setView("read");
     const setEditView = () => setView("edit");
+    const setDelView = () => setView("del");
 
     useEffect(() => {
 	api.getOne("students", studentId)
@@ -34,8 +35,6 @@ function Student() {
 	  });
 
     const deleteStudent = () => {
-	if (!window.confirm(`Delete student '${student.fullname}'?`)) return;
-
 	api.deleteOne("students", student.studentNum)
 	    .then(() => {
 		navigate(`/students`);
@@ -64,12 +63,30 @@ function Student() {
 	      view === "edit" ? <StudentForm student={ student }
 					     handleData={ editStudent }
 					     cancel={ setReadView } /> :
-	      <div>
+	      <>
+		  { view === "del" &&
+		    <div className="alert"
+			 style={{
+			     marginBottom: ".5rem",
+			     display: "flex",
+			     justifyContent: "center",
+			     alignItems: "center",
+			     columnGap: "1rem"
+			 }}>
+			<span>
+			    Do you really want to delete this student ?
+			</span>
+			<span>
+			    <button onClick={ deleteStudent }>Yes</button>
+			    <button className="alt" onClick={ setReadView }>No</button>
+			</span>
+		    </div>
+		  }
 		  <div style={textCenter}>
 		      <button onClick={ setEditView }>
 			  <FontAwesomeIcon icon={faPenToSquare} /> Edit
 		      </button>{" "}
-		      <button onClick={ deleteStudent }>
+		      <button onClick={ setDelView }>
 			  <FontAwesomeIcon icon={faXmark} /> Delete
 		      </button>
 		  </div>
@@ -99,7 +116,7 @@ function Student() {
 			  </tbody>
 		      </table>
 		  </div>
-	      </div>
+	      </>
 	    }
 	</div>
     );
