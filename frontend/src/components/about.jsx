@@ -1,12 +1,18 @@
 export default function About() {
     const style = {
+	display: "flex",
+	flexDirection: "column",
+	minHeight: "80%",
+	justifyContent: "space-evenly",
 	textAlign: "center",
-	padding: "1rem"
+	padding: "1rem",
+	maxWidth: "1200px",
+	margin: "0 auto"
     };
 
     const colStyle = {
 	padding: "0 2em",
-	width: "44%",
+	width: "45%",
 	textAlign: "center"
     };
 	
@@ -21,7 +27,7 @@ export default function About() {
 	    <p>
 		<i className="alert">Note: This project is still under development</i>
 	    </p>
-	    <div className="flex resp-flex" style={{ justifyContent: "space-around" }}>
+	    <div className="flex resp-flex" style={{ justifyContent: "space-between" }}>
 		<div className="card" style={ colStyle }>
 		    <h3>For clients</h3>
 		    <p>

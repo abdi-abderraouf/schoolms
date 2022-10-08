@@ -117,6 +117,15 @@ function ClassForm({ onAdd, onCancel }) {
     );
 }
 
+function Cell({ w, content, normalize }) {
+    return (
+	<div className="schedule-cell"
+	     style={{width: `${normalize ? w/.82 : w}%`}}>
+	    {content}
+	</div>
+    );
+}
+
 export default function Classes() {
     const showNotif = useContext(Ctx.Notif);
     const [classes, setClasses] = useState();
@@ -152,14 +161,6 @@ export default function Classes() {
 	    });
     };
 
-    function Cell({ w, content }) {
-	return (
-	    <div className="schedule-cell" style={{width: `${w}vw`}}>
-		{content}
-	    </div>
-	);
-    }
-
     return (
 	<section>
 	    <div className="toolbar">
@@ -186,6 +187,7 @@ export default function Classes() {
 		    <Cell w="20" content="Teacher" />
 		</div>
 		{ classesPerDay.map(day =>
+		    <>
 		    <div className="day-row flex" key={day.name}>
 			<Cell w="18" content={day.name} />
 			<div className="classes-cell">
@@ -195,15 +197,17 @@ export default function Classes() {
 				       onClick={() => setSelected(c._id)}
 				       className={"class-row flex " +
 						  (selected === c._id ? "selected" : "")}>
-				      <Cell w="20" content={c.branch} />
-				      <Cell w="10" content={c.level} />
-				      <Cell w="15" content={c.subject} />
-				      <Cell w="12" content={c.timeframe.join(" - ")} />
-				      <Cell w="20" content={c.teacher.fullname} />
+				      <Cell w="20" normalize={true} content={c.branch} />
+				      <Cell w="10" normalize={true} content={c.level} />
+				      <Cell w="15" normalize={true} content={c.subject} />
+				      <Cell w="12" normalize={true} content={c.timeframe.join(" - ")} />
+				      <Cell w="20" normalize={true} content={c.teacher.fullname} />
 				  </div>)
 			    }
 			</div> 
-		    </div>)
+		    </div>
+		    <div style={{ width: "95%", borderBottom: "1px dashed #E63946"}}></div>
+		</>)
 		}
 	    </div>
 	</section>

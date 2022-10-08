@@ -28,6 +28,29 @@ h2, h3 {
     color: var(--alt);
 }
 
+nav {
+    background-color: var(--secondary);
+    box-shadow: var(--shadow);
+}   
+
+nav > ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav a:hover {
+    text-decoration: none;
+    background-color: var(--light-secondary);
+}
+
+main {
+    min-height: 85vh;
+}
+
 form {
     max-width: 600px;
     background-color: #F9F9F9;
@@ -87,14 +110,15 @@ button[disabled] {
     cursor: default;
 }
 
-nav a:hover {
-    text-decoration: none;
-    background-color: var(--light-secondary);
-}
-
 table {
     width: 100%;
     text-align: left;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .header-row .schedule-cell, thead {
@@ -152,11 +176,6 @@ table {
     border-right: 2px solid white;
 }
 
-.day-row {
-    width: 95vw;
-    border-bottom: 1px dashed #E63946;
-}
-
 .day-row > .schedule-cell {
     align-items: center;
     background-color: var(--lighter);
@@ -180,11 +199,20 @@ table {
     width: 40%;
 }
 
+.classes-cell {
+    width: 82%;
+}
+
 @media screen and (max-width: 576px) {
     form {
 	flex-direction: column;
 	align-items: center;
 	max-width: 300px;
+    }
+
+    footer {
+	position: static;
+	margin-top: 2rem;
     }
 
     .resp-flex {
@@ -228,4 +256,27 @@ table {
 	width: 16vw !important;
     }
     
+}
+
+@media screen and (min-width: 1000px) {
+    div#admin-view {
+	display: flex;
+	height: 85vh;
+    }
+
+    #admin-view > div {
+	overflow-y: scroll;
+    }
+
+    nav {
+	flex-basis: 20%;
+    }
+
+    nav > ul {
+	flex-direction: column;
+    }
+
+    nav > ul > a {
+	border-bottom: 1px dotted var(--light);
+    }
 }

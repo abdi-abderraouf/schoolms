@@ -8,15 +8,17 @@ import Teachers from "../components/teachers";
 
 export default function Admin() {
     return (
-	<>
+	<div id="admin-view">
 	    <NavBar />
-	    <Routes>
-		<Route path="" element={<About />} />
-		<Route path="classes/*" element={<Classes />} />
-		<Route path="students/*" element={<Students />} />
-		<Route path="subjects/*" element={<Subjects />} />
-		<Route path="teachers/*" element={<Teachers />} />		
-	    </Routes>
-	</>
+	    <div style={{flexBasis: "80%" }} >
+		<Routes>
+		    <Route path="" element={<About />} />
+		    <Route path="classes/*" element={<Classes />} />
+		    <Route path="students/*" element={<Students />} />
+		    <Route path="subjects/*" element={<Subjects />} />
+		    <Route path="teachers/*" element={<Teachers />} />		
+		</Routes>
+	    </div>
+	</div>
     );
 }

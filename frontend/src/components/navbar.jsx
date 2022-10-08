@@ -10,17 +10,6 @@ import {
 export default function NavBar() {
 
     const path = useLocation().pathname;
-     
-    const ulStyle = {
-	listStyleType: "none",
-	display: "flex",
-	justifyContent: "center",
-	boxShadow: "var(--shadow)",
-	backgroundColor: "var(--secondary)",
-	margin: 0,
-	padding: 0,
-	textAlign: "center"
-    };
 
     const linkStyle = to => ({
 	display: "inline-block",
@@ -33,27 +22,27 @@ export default function NavBar() {
 
     return (
 	<nav>
-	    <ul style={ ulStyle }>
-		<li>
-		    <Link to="/classes" style={ linkStyle("/classes") }>
+	    <ul>
+		<Link to="/classes" style={ linkStyle("/classes") }>
+		    <li>
 			<FontAwesomeIcon icon={ faGraduationCap } /> Classes
-		    </Link>
-		</li>
-		<li>
-		    <Link to="/students" style={ linkStyle("/students") }>
+		    </li>
+		</Link>
+		<Link to="/students" style={ linkStyle("/students") }>
+		    <li>
 			<FontAwesomeIcon icon={ faUsers } /> Students
-		    </Link>
-		</li>
-		<li>
+		    </li>
+		</Link>
 		    <Link to="/subjects" style={ linkStyle("/subjects") }>
-			<FontAwesomeIcon icon={ faBook } /> Subjects
-		    </Link>
-		</li>
 		<li>
-		    <Link to="/teachers" style={ linkStyle("/teachers") }>
-			<FontAwesomeIcon icon={ faUserTie } /> Teachers
-		    </Link>
+			<FontAwesomeIcon icon={ faBook } /> Subjects
 		</li>
+		    </Link>
+		    <Link to="/teachers" style={ linkStyle("/teachers") }>
+		<li>
+			<FontAwesomeIcon icon={ faUserTie } /> Teachers
+		</li>
+		    </Link>
 	    </ul>
 	</nav>
     );

@@ -66,14 +66,10 @@ export default function App() {
 	localStorage.removeItem("user");
     };
 
-    const style = {
-	minHeight: "65vh"
-    };
-
     return (
 	<>
 	    <Header logout={logout} user={user?.username} />
-	    <main {...{ style }}>
+	    <main>
 		{notif.text && <Alert {...{notif}} />}
 		<Routes>
 		    <Route
