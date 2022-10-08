@@ -1,3 +1,5 @@
+/* Copyright 2022 Hassan El anabi (al-annabi.tech) */
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";

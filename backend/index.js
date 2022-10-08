@@ -1,3 +1,5 @@
+/* Copyright 2022 Hassan El anabi (al-annabi.tech) */
+
 const bcrypt = require("bcrypt");
 const express = require("express");
 const jwt = require("jsonwebtoken");
