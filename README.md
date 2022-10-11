@@ -18,11 +18,11 @@ SchoolMS (School Management System) is a web application dedicated to manage adm
 
 ## Request development, deployment or support ##
 
-I offer consultancy services for further development of the application, deployment to production or technical support related to the project. For any inquiries you can use the contact form at [my website](https://al-annabi.tech).
+I offer consultancy services for further development of the application, deployment to production or technical support related to the project. For more information you're welcome to contact me at helanabi@gmail.com.
 
 
 ## Copyright ##
 
-SchoolMS Copyright (c) 2022 Hassan El anabi (https://al-annabi.tech)
+SchoolMS Copyright (C) 2022 Hassan El anabi (al-annabi.tech)
 
-Licensed under the MIT license.  A copy of the license is provided with the software.
+Distributed under the terms of the MIT license.
