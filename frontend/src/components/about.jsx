@@ -32,10 +32,10 @@ export default function About() {
 		    <h3>For clients</h3>
 		    <ul>
 			<li>
-			    Can be customized/extended to meet your specific requirements.
+			    It can be customized/extended to meet your specific requirements.
 			</li>
 			<li>
-			    Can be installed locally (no extra charges, e.g. hosting),
+			    It can be installed locally (no extra charges, e.g. hosting),
 			    or deployed online to be accessible from anywhere (charges apply).
 			</li>
 		    </ul>
@@ -47,7 +47,7 @@ export default function About() {
 		    <h3>For developers</h3>
 		    <ul>
 			<li>
-			    This is free software (source code).
+			    This is free software (<a href="https://github.com/helanabi/schoolms">source code</a>).
 			</li>
 			<li>
 			    You may request support for customization, deployment, maintenance, etc.
