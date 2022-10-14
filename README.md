@@ -9,6 +9,10 @@ SchoolMS (School Management System) is a web application dedicated to manage adm
 * Subjects and teachers management
 * Viewing and editing weekly schedule for all classes.
 
+## Demo video ##
+
+A screencast demonstrating main application features is available: [Watch now](https://youtu.be/XMk1drlbRdU).
+
 ## Technical considerations ##
 
 * This is a single page application (SPA), this means greate user experience and efficient use of bandwidth.
