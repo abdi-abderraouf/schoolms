@@ -187,27 +187,27 @@ export default function Classes() {
 		    <Cell w="20" content="Teacher" />
 		</div>
 		{ classesPerDay.map(day =>
-		    <>
-		    <div className="day-row flex" key={day.name}>
-			<Cell w="18" content={day.name} />
-			<div className="classes-cell">
-			    { Boolean(day.classes.length) &&
-			      day.classes.map(c =>
-				  <div key={c._id}
-				       onClick={() => setSelected(c._id)}
-				       className={"class-row flex " +
-						  (selected === c._id ? "selected" : "")}>
-				      <Cell w="20" normalize={true} content={c.branch} />
-				      <Cell w="10" normalize={true} content={c.level} />
-				      <Cell w="15" normalize={true} content={c.subject} />
-				      <Cell w="12" normalize={true} content={c.timeframe.join(" - ")} />
-				      <Cell w="20" normalize={true} content={c.teacher.fullname} />
-				  </div>)
-			    }
-			</div> 
-		    </div>
-		    <div style={{ width: "95%", borderBottom: "1px dashed #E63946"}}></div>
-		</>)
+		    <div key={day.name}>
+			<div className="day-row flex" key={day.name}>
+			    <Cell w="18" content={day.name} />
+			    <div className="classes-cell">
+				{ Boolean(day.classes.length) &&
+				  day.classes.map(c =>
+				      <div key={c._id}
+					   onClick={() => setSelected(c._id)}
+					   className={"class-row flex " +
+						      (selected === c._id ? "selected" : "")}>
+					  <Cell w="20" normalize={true} content={c.branch} />
+					  <Cell w="10" normalize={true} content={c.level} />
+					  <Cell w="15" normalize={true} content={c.subject} />
+					  <Cell w="12" normalize={true} content={c.timeframe.join(" - ")} />
+					  <Cell w="20" normalize={true} content={c.teacher?.fullname} />
+				      </div>)
+				}
+			    </div> 
+			</div>
+			<div style={{ width: "95%", borderBottom: "1px dashed #E63946"}}></div>
+		    </div>)
 		}
 	    </div>
 	</section>
